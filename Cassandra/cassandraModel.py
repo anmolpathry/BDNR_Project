@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from collections import defaultdict
 import logging
 from tabulate import tabulate
 from datetime import datetime
@@ -6,278 +7,121 @@ from datetime import datetime
 # Set logger
 log = logging.getLogger()
 
-
 CREATE_KEYSPACE = """
-        CREATE KEYSPACE IF NOT EXISTS {}
-        WITH replication = {{ 'class': 'SimpleStrategy', 'replication_factor': {} }}
+    CREATE KEYSPACE IF NOT EXISTS {}
+    WITH replication = {{ 'class': 'SimpleStrategy', 'replication_factor': {} }}
 """
 
-CREATE_USERS_TABLE = """
-    CREATE TABLE IF NOT EXISTS accounts_by_user (
-        username TEXT,
-        account_number TEXT,
-        cash_balance DECIMAL,
-        name TEXT STATIC,
-        PRIMARY KEY ((username),account_number)
-    )
+CREATE_FLIGHT_PASSENGERS_TRANSIT_MONTH = """
+    CREATE TABLE IF NOT EXISTS flight_passengers_tr_m (
+    passenger_id TEXT,
+    airline TEXT,
+    from_loc TEXT,
+    to_loc TEXT,
+    day INT,
+    month INT,
+    year INT,
+    age INT,
+    gender TEXT,
+    reason TEXT,
+    stay TEXT,
+    transit TEXT,
+    connection BOOLEAN,
+    wait INT,
+    price DECIMAL,
+    PRIMARY KEY ((from_loc), month, passenger_id)
+    ) WITH CLUSTERING ORDER BY (month DESC)
 """
 
-CREATE_POSSITIONS_BY_ACCOUNT_TABLE = """
-    CREATE TABLE IF NOT EXISTS positions_by_account (
-        account TEXT,
-        symbol TEXT,
-        quantity DECIMAL,
-        PRIMARY KEY ((account),symbol)
-    )
+CREATE_FLIGHT_PASSENGERS_REASON_MONTH = """
+    CREATE TABLE IF NOT EXISTS flight_passengers_rm (
+    passenger_id TEXT,
+    airline TEXT,
+    from_loc TEXT,
+    to_loc TEXT,
+    day INT,
+    month INT,
+    year INT,
+    age INT,
+    gender TEXT,
+    reason TEXT,
+    stay TEXT,
+    transit TEXT,
+    connection BOOLEAN,
+    wait INT,
+    price DECIMAL,
+    PRIMARY KEY ((from_loc, reason), month, passenger_id)
+    ) WITH CLUSTERING ORDER BY (month DESC)
 """
 
-CREATE_TRADES_BY_ACCOUNT_DATE_TABLE = """
-    CREATE TABLE IF NOT EXISTS trades_by_a_d (
-        account TEXT,
-        trade_id TIMEUUID,
-        type TEXT,
-        symbol TEXT,
-        shares DECIMAL,
-        price DECIMAL,
-        amount DECIMAL,
-        PRIMARY KEY ((account), trade_id)
-    ) WITH CLUSTERING ORDER BY (trade_id DESC)
+SELECT1 = """
+    SELECT from_loc, month, COUNT(month) AS month_count
+    FROM flight_passengers_tr_m
+    GROUP BY from_loc, month;
 """
 
-# CREADAS POR LA TAREA
-CREATE_TRADES_BY_ACCOUNT_TRADE_DATE_TABLE = """
-    CREATE TABLE IF NOT EXISTS trades_by_a_td (
-        account TEXT,
-        trade_id TIMEUUID,
-        type TEXT,
-        symbol TEXT,
-        shares DECIMAL,
-        price DECIMAL,
-        amount DECIMAL,
-        PRIMARY KEY ((account), type, trade_id)
-    ) WITH CLUSTERING ORDER BY (type ASC, trade_id DESC)
-"""
-
-CREATE_TRADES_BY_ACCOUNT_SYMBOL_TRADE_DATE_TABLE = """
-    CREATE TABLE IF NOT EXISTS trades_by_a_std (
-        account TEXT,
-        trade_id TIMEUUID,
-        type TEXT,
-        symbol TEXT,
-        shares DECIMAL,
-        price DECIMAL,
-        amount DECIMAL,
-        PRIMARY KEY ((account), symbol, type, trade_id)
-    ) WITH CLUSTERING ORDER BY (symbol ASC, type ASC, trade_id DESC)
-"""
-
-CREATE_TRADES_BY_ACCOUNT_SYMBOL_DATE_TABLE = """
-    CREATE TABLE IF NOT EXISTS trades_by_a_sd (
-        account TEXT,
-        trade_id TIMEUUID,
-        type TEXT,
-        symbol TEXT,
-        shares DECIMAL,
-        price DECIMAL,
-        amount DECIMAL,
-        PRIMARY KEY ((account), symbol, trade_id)
-    ) WITH CLUSTERING ORDER BY (symbol ASC, trade_id DESC)
-"""
-# AQUI TERMINAN LAS TABLAS DE LA TAREA
-
-SELECT_USER_ACCOUNTS = """
-    SELECT username, account_number, name, cash_balance
-    FROM accounts_by_user
-    WHERE username = ?
-"""
-
-# SELECTS DE TAREA
-
-SELECT_USER_POSITIONS = """
-    SELECT account, symbol, quantity
-    FROM positions_by_account
-    WHERE account = ?
-"""
-
-SELECT_ALL_TRADES_FROM_HISTORY = """
-    SELECT account, toDate(trade_id) AS Date, type, symbol, shares, price, amount
-    FROM trades_by_a_d
-    WHERE account = ?
-"""
-
-SELECT_DATE_RANGE_TRADES_FROM_HISTORY = """
-    SELECT account, toDate(trade_id) AS Date, type, symbol, shares, price, amount
-    FROM trades_by_a_d
-    WHERE account = ?
-    AND trade_id >= minTimeuuid(?) AND trade_id <= maxTimeuuid(?)
-"""
-
-SELECT_TYPE_TRADES_FROM_HISTORY = """
-    SELECT account, toDate(trade_id) AS Date, type, symbol, shares, price, amount
-    FROM trades_by_a_td
-    WHERE account = ?
-    AND type = ?
-"""
-
-SELECT_TYPE_TRADES_FROM_HISTORY_BY_DATE = """
-    SELECT account, toDate(trade_id) AS Date, type, symbol, shares, price, amount
-    FROM trades_by_a_td
-    WHERE account = ?
-    AND type = ?
-    AND trade_id >= minTimeuuid(?) AND trade_id <= maxTimeuuid(?)
-"""
-
-SELECT_SYMBOL_TRADES_FROM_HISTORY = """
-    SELECT account, toDate(trade_id) AS Date, type, symbol, shares, price, amount
-    FROM trades_by_a_sd
-    WHERE account = ?
-    AND symbol = ?
-"""
-
-SELECT_SYMBOL_TRADES_FROM_HISTORY_BY_DATE = """
-    SELECT account, toDate(trade_id) AS Date, type, symbol, shares, price, amount
-    FROM trades_by_a_sd
-    WHERE account = ?
-    AND symbol = ?
-    AND trade_id >= minTimeuuid(?) AND trade_id <= maxTimeuuid(?)
-"""
-
-SELECT_ALL_SYMBOL_TRADES_FROM_HISTORY = """
-    SELECT account, toDate(trade_id) AS Date, type, symbol, shares, price, amount
-    FROM trades_by_a_sd
-    WHERE account = ?
+SELECT2 = """
+    SELECT from_loc, reason, COUNT(reason) AS travelers
+    FROM flight_passengers_rm
+    WHERE reason = 'On vacation/Pleasure'
+    GROUP BY from_loc, reason ALLOW FILTERING;
 """
 
 def create_keyspace(session, keyspace, replication_factor):
     log.info(f"Creating keyspace: {keyspace} with replication factor {replication_factor}")
     session.execute(CREATE_KEYSPACE.format(keyspace, replication_factor))
 
-
 def create_schema(session):
     log.info("Creating model schema")
-    session.execute(CREATE_USERS_TABLE)
-    session.execute(CREATE_POSSITIONS_BY_ACCOUNT_TABLE)
-    session.execute(CREATE_TRADES_BY_ACCOUNT_DATE_TABLE)
-    session.execute(CREATE_TRADES_BY_ACCOUNT_TRADE_DATE_TABLE)
-    session.execute(CREATE_TRADES_BY_ACCOUNT_SYMBOL_TRADE_DATE_TABLE)
-    session.execute(CREATE_TRADES_BY_ACCOUNT_SYMBOL_DATE_TABLE)
+    session.execute(CREATE_FLIGHT_PASSENGERS_TRANSIT_MONTH)
+    session.execute(CREATE_FLIGHT_PASSENGERS_REASON_MONTH)
 
+def get_most_popular_travel_months(session):
+    log.info("Retrieving the most popular months for travel")
+    stmt = session.prepare(SELECT1)
+    rows = session.execute(stmt)
 
-def get_user_accounts(session, username):
-    log.info(f"Retrieving {username} accounts")
-    stmt = session.prepare(SELECT_USER_ACCOUNTS)
-    rows = session.execute(stmt, [username])
-    print(tabulate(rows, headers=["Username", "Account Number", "Name", "Cash Balance"], tablefmt="rounded_grid"))
+    from_loc_counts = defaultdict(list)
 
-def get_account(session, username):
-    log.info(f"Retrieving {username} accounts")
-    stmt = session.prepare(SELECT_USER_ACCOUNTS)
-    rows = session.execute(stmt, [username])
-    accounts = session.execute(stmt, [username])
-    accountNumbers = [[account.account_number] for account in accounts]
-    if len(accountNumbers) > 1:
-        print(tabulate(accountNumbers, headers=["Account"], tablefmt="rounded_grid", showindex="always"))
-        option = int(input('Select your account (index): '))
-        while option < 0 or option >= len(accountNumbers):
-            print('Error, account not exist')
-            option = int(input('Select your account (index): '))
-        selectedAccount = str(f"{rows[option].account_number}")
-    else:
-        selectedAccount = str(f"{rows[0].account_number}")
-    return selectedAccount
+    # Populate the dictionary
+    for row in rows:
+        from_loc_counts[row.from_loc].append((row.month, row.month_count))
 
-def get_type():
-    TYPES = [['buy'], ['sell']]
-    print(tabulate(TYPES, headers=["Types"], tablefmt="rounded_grid", showindex="always"))
-    option = int(input('Select trade type (index): '))
-    while option < 0 or option >= len(TYPES):
-        print('Error, option not exist')
-        option = int(input('Select trade type (index): '))
-    typeSelected = str(f"{TYPES[option][0]}")
-    return typeSelected
+    # Find the top 3 counts for each from_loc
+    top_3_counts = {}
+    for from_loc, counts in from_loc_counts.items():
+        top_3_counts[from_loc] = sorted(counts, key=lambda x: x[1], reverse=True)[:3]
 
-def get_symbol(session, account):
-    stmt = session.prepare(SELECT_ALL_SYMBOL_TRADES_FROM_HISTORY) # para ejecutar un query lo necesito preparar ya que aqui se identifican los ? para cambiarlos por los parametros
-    rows = session.execute(stmt, [account])
-    INSTRUMENTS = set(account.symbol for account in rows)
-    symbols = list(INSTRUMENTS)
-    instrumentSymbols = [[instrument] for instrument in symbols]
-    print(tabulate(instrumentSymbols, headers=["Instrument Symbols"], tablefmt="rounded_grid", showindex="always"))
-    option = int(input('Select symbol trade (index): '))
-    while option < 0 or option >= len(instrumentSymbols):
-        print('Error, option not exist')
-        option = int(input('Select symbol trade (index): '))
-    symbolSelected = str(f"{instrumentSymbols[option][0]}")
-    return symbolSelected
+    table_data = []
+    for from_loc, top_counts in top_3_counts.items():
+        for month, month_count in top_counts:
+            month_name = "January" if month == 1 else \
+                        "February" if month == 2 else \
+                        "March" if month == 3 else \
+                        "April" if month == 4 else \
+                        "May" if month == 5 else \
+                        "June" if month == 6 else \
+                        "July" if month == 7 else \
+                        "August" if month == 8 else \
+                        "September" if month == 9 else \
+                        "October" if month == 10 else \
+                        "November" if month == 11 else \
+                        "December"
+            table_data.append([from_loc, month_name, month_count])
 
-def get_user_position(session, account):
-    log.info(f"Retrieving {account} accounts")
-    stmt = session.prepare(SELECT_USER_POSITIONS) # para ejecutar un query lo necesito preparar
-    rows = session.execute(stmt, [account]) # y despues ya puedo ejecutar ese query con esta linea de código
-    print(tabulate(rows, headers=["Account", "Symbol", "Quantity"], tablefmt="rounded_grid"))
+    headers = ["Airport", "Month", "Travelers"]
+    print(tabulate(table_data, headers=headers, tablefmt="pretty"))
 
-def optional_date(optional):
-    if optional:
-        return get_date_range()
-    else:
-        options = [["No"], ["Yes"]]
-        print(tabulate(options, headers=["Option"], tablefmt="rounded_grid", showindex="always"))
-        option = int(input('Date Range: '))
-        while option < 0 or option >= len(options):
-            print('Error, option not exist')
-            option = int(input('Date Range: '))
-        if option: 
-            return get_date_range()
+    print("")
 
-def get_date_range():
-    startDateCorrect = 0
-    while startDateCorrect != 1:
-        start_date_str = input('Enter start date in YYYY-MM-DD format: ')
-        try:
-            # converte la cadena de fecha en un objeto de marca de tiempo
-            start_date = datetime.strptime(start_date_str, '%Y-%m-%d')
-            startDateCorrect = 1
-        except ValueError:
-            print("Invalid date format. Please enter the date in YYYY-MM-DD format.")
-    endDateCorrect = 0
-    while endDateCorrect != 1:
-        end_date_str = input('Enter end date in YYYY-MM-DD format: ')
-        try:
-            # converte la cadena de fecha en un objeto de marca de tiempo
-            end_date = datetime.strptime(end_date_str, '%Y-%m-%d')
-            endDateCorrect = 1
-        except ValueError:
-            print("Invalid date format. Please enter the date in YYYY-MM-DD format.")
-    return start_date, end_date
+def get_most_visited_airports_during_vacation(session):
+    log.info("Retrieving The Most Visited Airports During Vacation/Pleasure")
+    stmt = session.prepare(SELECT2)
+    rows = session.execute(stmt)
 
-def get_all_trade_history(session, account):
-    log.info(f"Retrieving {account} accounts")
-    stmt = session.prepare(SELECT_ALL_TRADES_FROM_HISTORY) # para ejecutar un query lo necesito preparar
-    rows = session.execute(stmt, [account]) # y despues ya puedo ejecutar ese query con esta linea de código
-    print(tabulate(rows, headers=["Account", "Date", "Type", "Symbol", "Shares", "Price", "Amount"], tablefmt="rounded_grid"))
+    table_data = []
+    for row in rows:
+        table_data.append([row.from_loc, row.reason, row.travelers])
 
-def get_date_range_trades_history(session, account, start_date, end_date):
-    log.info(f"Retrieving {account} accounts")
-    stmt = session.prepare(SELECT_DATE_RANGE_TRADES_FROM_HISTORY) # para ejecutar un query lo necesito preparar ya que aqui se identifican los ? para cambiarlos por los parametros
-    rows = session.execute(stmt, [account, start_date, end_date]) # y despues ya puedo ejecutar ese query con esta linea de código, aqui se cambian los ? por los parametros de un arreglo
-    print(tabulate(rows, headers=["Account", "Date", "Type", "Symbol", "Shares", "Price", "Amount"], tablefmt="rounded_grid"))
-
-def get_type_trades_history(session, account, tradeType, dates):
-    log.info(f"Retrieving {account} accounts")
-    if dates == None:
-        stmt = session.prepare(SELECT_TYPE_TRADES_FROM_HISTORY) # para ejecutar un query lo necesito preparar ya que aqui se identifican los ? para cambiarlos por los parametros
-        rows = session.execute(stmt, [account, tradeType]) # y despues ya puedo ejecutar ese query con esta linea de código, aqui se cambian los ? por los parametros de un arreglo
-    else:
-        stmt = session.prepare(SELECT_TYPE_TRADES_FROM_HISTORY_BY_DATE) # para ejecutar un query lo necesito preparar ya que aqui se identifican los ? para cambiarlos por los parametros
-        rows = session.execute(stmt, [account, tradeType, dates[0],dates[1]]) # y despues ya puedo ejecutar ese query con esta linea de código, aqui se cambian los ? por los parametros de un arreglo
-    print(tabulate(rows, headers=["Account", "Date", "Type", "Symbol", "Shares", "Price", "Amount"], tablefmt="rounded_grid"))
-
-def get_symbol_trades_history(session, account, symbolTrade, dates):
-    log.info(f"Retrieving {account} accounts")
-    if dates == None:
-        stmt = session.prepare(SELECT_SYMBOL_TRADES_FROM_HISTORY) # para ejecutar un query lo necesito preparar ya que aqui se identifican los ? para cambiarlos por los parametros
-        rows = session.execute(stmt, [account, symbolTrade]) # y despues ya puedo ejecutar ese query con esta linea de código, aqui se cambian los ? por los parametros de un arreglo
-    else:
-        stmt = session.prepare(SELECT_SYMBOL_TRADES_FROM_HISTORY_BY_DATE) # para ejecutar un query lo necesito preparar ya que aqui se identifican los ? para cambiarlos por los parametros
-        rows = session.execute(stmt, [account, symbolTrade, dates[0], dates[1]]) # y despues ya puedo ejecutar ese query con esta linea de código, aqui se cambian los ? por los parametros de un arreglo
-    print(tabulate(rows, headers=["Account", "Date", "Type", "Symbol", "Shares", "Price", "Amount"], tablefmt="rounded_grid"))
+    headers = ["From Location", "Reason", "Travelers"]
+    print(tabulate(table_data, headers=headers, tablefmt="pretty"))
