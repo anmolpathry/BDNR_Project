@@ -1,4 +1,4 @@
-airline,from_loc,to,day,month,year,age,gender,reason,stay,transit,connection,wait,price
+airline,from_loc,to_loc,day,month,year,age,gender,reason,stay,transit,connection,wait,price
 Aeromexico,GDL,SJC,2,1,2022,88,undisclosed,Back Home,Home,Own car,False,0,5837
 American Airlines,GDL,SJC,9,3,2016,14,unspecified,Back Home,Home,Mobility as a service,False,0,6237
 Volaris,PDX,SJC,30,3,2023,28,male,Back Home,Home,Public Transportation,False,0,6978
