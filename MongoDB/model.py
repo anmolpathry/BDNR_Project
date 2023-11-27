@@ -5,7 +5,7 @@ class FlightInfo(BaseModel):
     id: str = Field(default_factory=uuid.uuid4, alias="_id")
     airline: str = Field(...)
     from_loc: str = Field(...)
-    to: str = Field(...)
+    to_loc: str = Field(...)
     day: int = Field(...)
     month: int = Field(...)
     year: int = Field(...)
@@ -24,8 +24,8 @@ class FlightInfo(BaseModel):
             "example": {
                 "_id": "066de609-b04a-4b30-b46c-32537c7f1f6e",
                 "airline": "Example Airlines",
-                "from": "CityA",
-                "to": "CityB",
+                "from_loc": "CityA",
+                "to_loc": "CityB",
                 "day": 1,
                 "month": 1,
                 "year": 2023,

@@ -16,7 +16,31 @@ def create_flight(request: Request, flight: FlightInfo = Body(...)):
     return created_flight
 
 @router.get("/", response_description="Get all flights", response_model=List[FlightInfo])
-def list_books(request: Request):
+def list_flights(request: Request):
     flights = list(request.app.database["flights"].find({}))
+
+    return flights
+
+@router.get("/airports", response_description="Get all airports for food/beverages", response_model=List)
+def list_airports(request: Request):
+    pipeline = [
+            {"$match": {"wait": {"$gt": 0}}},
+            {
+                "$group": {
+                    "_id": "$to_loc",
+                    "totalWait": {"$sum": "$wait"}
+                }
+            },
+            {
+                "$project": {
+                    "_id": 0,
+                    "airport": "$_id",
+                    "totalWait": 1
+                }
+            },
+            {"$sort": {"totalWait": -1, "airport": 1}}
+        ]
+
+    flights = list(request.app.database["flights"].aggregate(pipeline))
 
     return flights

@@ -8,7 +8,7 @@ import json
 # Set logger
 log = logging.getLogger()
 log.setLevel('INFO')
-handler = logging.FileHandler('books.log')
+handler = logging.FileHandler('flights.log')
 handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(name)s: %(message)s"))
 log.addHandler(handler)
 
@@ -21,17 +21,20 @@ def print_flight(flight):
     print("="*50)
 
 def list_flights():
-    suffix = "/flights"
+    suffix = "/flight"
     endpoint = FLIGHTS_API_URL + suffix
-    # params = {
-    #     "rating": rating,
-    #     "num_pages": num_pages,
-    #     "text_reviews_count": text_reviews_count,
-    #     "title": title,
-    #     "limit":limit,
-    #     "skip":skip
-    # }
-    #response = requests.get(endpoint, params=params)
+    response = requests.get(endpoint)
+    if response.ok:
+        json_resp = response.json()
+        for flight in json_resp:
+            print_flight(flight)
+    else:
+        print(f"Error: {response}")
+
+def list_airports():
+    #filtrar por mayor wait, ya que aquí se abriran los servicios de alimentos y bebidas porque la gente se queda más tiempo ahí
+    suffix = "/flight/airports"
+    endpoint = FLIGHTS_API_URL + suffix
     response = requests.get(endpoint)
     if response.ok:
         json_resp = response.json()
@@ -45,17 +48,21 @@ def main():
 
     parser = argparse.ArgumentParser()
 
-    list_of_actions = ["search", "get"]
+    list_of_actions = ["search"]
     parser.add_argument("action", choices=list_of_actions,
             help="Action to be user for the flights catalog")
-    #parser.add_argument("-t", "--title",
-     #       help="Search parameter to look for books with title that includes the param", default=None)
+    parser.add_argument("-f", "--flights", nargs='?',
+           help="Search parameter to look for flights data", const=True)
+    parser.add_argument("-a", "--airports", nargs='?',
+           help="Search parameter to look for airports to open food/drinks services", const=True)
 
 
     args = parser.parse_args()
 
-    if args.action == "search":
+    if args.action == "search" and args.flights:
         list_flights()
+    if args.action == "search" and args.airports:
+        list_airports()
 
 
 if __name__ == "__main__":
