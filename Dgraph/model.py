@@ -99,8 +99,13 @@ def show_flight_routes(client):
 
     # Imprimir las primeras cinco rutas duplicadas
     top_5_duplicates = sorted_duplicates[:5]
+    table = []
+
     for key, value in top_5_duplicates:
-        print(f"Route {key}: {len(value)}")
+       table.append([f"Route {key}", len(value)])
+
+    print(tabulate(table, headers=["Route", "Count"], tablefmt="pretty"))
+
 
 def show_flight_airlines(client):
     query = """query flight_airlines(){
