@@ -1,0 +1,830 @@
+{
+    "data": {
+      "popular_routes": [
+        {
+          "flight_count": 100
+        },
+        {
+          "from_loc": {
+            "airport_name": "JFK"
+          },
+          "to_loc": {
+            "airport_name": "SJC"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "LAX"
+          },
+          "to_loc": {
+            "airport_name": "SJC"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "PDX"
+          },
+          "to_loc": {
+            "airport_name": "LAX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "GDL"
+          },
+          "to_loc": {
+            "airport_name": "JFK"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "JFK"
+          },
+          "to_loc": {
+            "airport_name": "SJC"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "LAX"
+          },
+          "to_loc": {
+            "airport_name": "PDX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "SJC"
+          },
+          "to_loc": {
+            "airport_name": "GDL"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "LAX"
+          },
+          "to_loc": {
+            "airport_name": "GDL"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "LAX"
+          },
+          "to_loc": {
+            "airport_name": "GDL"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "LAX"
+          },
+          "to_loc": {
+            "airport_name": "SJC"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "GDL"
+          },
+          "to_loc": {
+            "airport_name": "LAX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "GDL"
+          },
+          "to_loc": {
+            "airport_name": "PDX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "JFK"
+          },
+          "to_loc": {
+            "airport_name": "SJC"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "GDL"
+          },
+          "to_loc": {
+            "airport_name": "PDX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "JFK"
+          },
+          "to_loc": {
+            "airport_name": "PDX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "SJC"
+          },
+          "to_loc": {
+            "airport_name": "JFK"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "PDX"
+          },
+          "to_loc": {
+            "airport_name": "SJC"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "LAX"
+          },
+          "to_loc": {
+            "airport_name": "JFK"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "GDL"
+          },
+          "to_loc": {
+            "airport_name": "LAX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "JFK"
+          },
+          "to_loc": {
+            "airport_name": "LAX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "SJC"
+          },
+          "to_loc": {
+            "airport_name": "LAX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "GDL"
+          },
+          "to_loc": {
+            "airport_name": "PDX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "PDX"
+          },
+          "to_loc": {
+            "airport_name": "GDL"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "LAX"
+          },
+          "to_loc": {
+            "airport_name": "GDL"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "GDL"
+          },
+          "to_loc": {
+            "airport_name": "PDX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "PDX"
+          },
+          "to_loc": {
+            "airport_name": "GDL"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "JFK"
+          },
+          "to_loc": {
+            "airport_name": "GDL"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "LAX"
+          },
+          "to_loc": {
+            "airport_name": "PDX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "SJC"
+          },
+          "to_loc": {
+            "airport_name": "LAX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "JFK"
+          },
+          "to_loc": {
+            "airport_name": "SJC"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "LAX"
+          },
+          "to_loc": {
+            "airport_name": "SJC"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "GDL"
+          },
+          "to_loc": {
+            "airport_name": "PDX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "LAX"
+          },
+          "to_loc": {
+            "airport_name": "PDX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "PDX"
+          },
+          "to_loc": {
+            "airport_name": "LAX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "PDX"
+          },
+          "to_loc": {
+            "airport_name": "LAX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "JFK"
+          },
+          "to_loc": {
+            "airport_name": "PDX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "GDL"
+          },
+          "to_loc": {
+            "airport_name": "PDX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "PDX"
+          },
+          "to_loc": {
+            "airport_name": "GDL"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "GDL"
+          },
+          "to_loc": {
+            "airport_name": "JFK"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "PDX"
+          },
+          "to_loc": {
+            "airport_name": "JFK"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "GDL"
+          },
+          "to_loc": {
+            "airport_name": "SJC"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "LAX"
+          },
+          "to_loc": {
+            "airport_name": "SJC"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "GDL"
+          },
+          "to_loc": {
+            "airport_name": "SJC"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "PDX"
+          },
+          "to_loc": {
+            "airport_name": "SJC"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "GDL"
+          },
+          "to_loc": {
+            "airport_name": "PDX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "JFK"
+          },
+          "to_loc": {
+            "airport_name": "LAX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "PDX"
+          },
+          "to_loc": {
+            "airport_name": "LAX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "GDL"
+          },
+          "to_loc": {
+            "airport_name": "JFK"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "LAX"
+          },
+          "to_loc": {
+            "airport_name": "GDL"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "LAX"
+          },
+          "to_loc": {
+            "airport_name": "GDL"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "PDX"
+          },
+          "to_loc": {
+            "airport_name": "JFK"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "JFK"
+          },
+          "to_loc": {
+            "airport_name": "PDX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "GDL"
+          },
+          "to_loc": {
+            "airport_name": "SJC"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "GDL"
+          },
+          "to_loc": {
+            "airport_name": "PDX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "GDL"
+          },
+          "to_loc": {
+            "airport_name": "JFK"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "SJC"
+          },
+          "to_loc": {
+            "airport_name": "JFK"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "SJC"
+          },
+          "to_loc": {
+            "airport_name": "GDL"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "SJC"
+          },
+          "to_loc": {
+            "airport_name": "GDL"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "JFK"
+          },
+          "to_loc": {
+            "airport_name": "PDX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "SJC"
+          },
+          "to_loc": {
+            "airport_name": "GDL"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "PDX"
+          },
+          "to_loc": {
+            "airport_name": "LAX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "GDL"
+          },
+          "to_loc": {
+            "airport_name": "LAX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "SJC"
+          },
+          "to_loc": {
+            "airport_name": "JFK"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "LAX"
+          },
+          "to_loc": {
+            "airport_name": "GDL"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "GDL"
+          },
+          "to_loc": {
+            "airport_name": "JFK"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "SJC"
+          },
+          "to_loc": {
+            "airport_name": "GDL"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "LAX"
+          },
+          "to_loc": {
+            "airport_name": "GDL"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "LAX"
+          },
+          "to_loc": {
+            "airport_name": "PDX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "LAX"
+          },
+          "to_loc": {
+            "airport_name": "GDL"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "JFK"
+          },
+          "to_loc": {
+            "airport_name": "LAX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "SJC"
+          },
+          "to_loc": {
+            "airport_name": "PDX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "GDL"
+          },
+          "to_loc": {
+            "airport_name": "SJC"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "GDL"
+          },
+          "to_loc": {
+            "airport_name": "JFK"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "SJC"
+          },
+          "to_loc": {
+            "airport_name": "GDL"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "SJC"
+          },
+          "to_loc": {
+            "airport_name": "GDL"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "SJC"
+          },
+          "to_loc": {
+            "airport_name": "PDX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "SJC"
+          },
+          "to_loc": {
+            "airport_name": "LAX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "GDL"
+          },
+          "to_loc": {
+            "airport_name": "PDX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "PDX"
+          },
+          "to_loc": {
+            "airport_name": "GDL"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "GDL"
+          },
+          "to_loc": {
+            "airport_name": "SJC"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "SJC"
+          },
+          "to_loc": {
+            "airport_name": "LAX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "PDX"
+          },
+          "to_loc": {
+            "airport_name": "SJC"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "GDL"
+          },
+          "to_loc": {
+            "airport_name": "LAX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "SJC"
+          },
+          "to_loc": {
+            "airport_name": "LAX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "LAX"
+          },
+          "to_loc": {
+            "airport_name": "JFK"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "LAX"
+          },
+          "to_loc": {
+            "airport_name": "JFK"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "LAX"
+          },
+          "to_loc": {
+            "airport_name": "GDL"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "SJC"
+          },
+          "to_loc": {
+            "airport_name": "PDX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "SJC"
+          },
+          "to_loc": {
+            "airport_name": "JFK"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "JFK"
+          },
+          "to_loc": {
+            "airport_name": "PDX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "PDX"
+          },
+          "to_loc": {
+            "airport_name": "LAX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "GDL"
+          },
+          "to_loc": {
+            "airport_name": "JFK"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "GDL"
+          },
+          "to_loc": {
+            "airport_name": "LAX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "LAX"
+          },
+          "to_loc": {
+            "airport_name": "SJC"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "SJC"
+          },
+          "to_loc": {
+            "airport_name": "LAX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "SJC"
+          },
+          "to_loc": {
+            "airport_name": "JFK"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "PDX"
+          },
+          "to_loc": {
+            "airport_name": "LAX"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "JFK"
+          },
+          "to_loc": {
+            "airport_name": "SJC"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "GDL"
+          },
+          "to_loc": {
+            "airport_name": "JFK"
+          }
+        },
+        {
+          "from_loc": {
+            "airport_name": "JFK"
+          },
+          "to_loc": {
+            "airport_name": "SJC"
+          }
+        }
+      ]
+    },
+    "extensions": {
+      "server_latency": {
+        "parsing_ns": 86667,
+        "processing_ns": 1927167,
+        "encoding_ns": 261250,
+        "assign_timestamp_ns": 3246000,
+        "total_ns": 5966459
+      },
+      "txn": {
+        "start_ts": 2063
+      },
+      "metrics": {
+        "num_uids": {
+          "_total": 210,
+          "airport_name": 10,
+          "day": 0,
+          "from_loc": 100,
+          "to_loc": 100
+        }
+      }
+    }
+  }
