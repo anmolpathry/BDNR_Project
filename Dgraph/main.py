@@ -8,7 +8,9 @@ DGRAPH_URI = os.getenv('DGRAPH_URI', 'localhost:9080')
 def print_menu():
     mm_options = {
         1: "Create data",
-        8: "Drop All",
+        2: "Show Popular Flight Routes",
+        3: "Show Quantity of Flights by Airlines",
+        4: "Drop All",
         0: "Exit"
     }
     for key in mm_options.keys():
@@ -36,7 +38,11 @@ def main():
         option = int(input('Enter your choice: '))
         if option == 1:
             populate.create_data(client)
-        if option == 8:
+        if option == 2:
+            model.show_flight_routes(client)
+        if option == 3:
+            model.show_flight_airlines(client)
+        if option == 4:
             model.drop_all(client)
         if option == 0:
             close_client_stub(client_stub)
