@@ -43,6 +43,21 @@ def list_airports():
     else:
         print(f"Error: {response}")
 
+def filter_price(price):
+    #filtrar por mayor wait, ya que aquí se abriran los servicios de alimentos y bebidas porque la gente se queda más tiempo ahí
+    suffix = "/flight/price"
+    endpoint = FLIGHTS_API_URL + suffix
+    params = {
+        "price":price
+    }
+    response = requests.get(endpoint, params=params)
+    if response.ok:
+        json_resp = response.json()
+        for flight in json_resp:
+            print_flight(flight)
+    else:
+        print(f"Error: {response}")
+
 def main():
     log.info(f"Welcome to flights catalog. App requests to: {FLIGHTS_API_URL}")
 
@@ -55,6 +70,8 @@ def main():
            help="Search parameter to look for flights data", const=True)
     parser.add_argument("-a", "--airports", nargs='?',
            help="Search parameter to look for airports to open food/drinks services", const=True)
+    parser.add_argument("-p", "--price",
+           help="Search parameter to look for flights with prices equal or lower than the parameter", default=None)
 
 
     args = parser.parse_args()
@@ -63,6 +80,8 @@ def main():
         list_flights()
     if args.action == "search" and args.airports:
         list_airports()
+    if args.action == "search" and args.price:
+        filter_price(args.price)
 
 
 if __name__ == "__main__":

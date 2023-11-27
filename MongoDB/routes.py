@@ -21,6 +21,15 @@ def list_flights(request: Request):
 
     return flights
 
+@router.get("/price", response_description="Get all flights", response_model=List)
+def list_flights(request: Request, price:float=0):
+    query = {"price": {"$lte": price}}
+    projection = {"from_loc": 1, "to_loc": 1, "price": 1, "airline": 1, "_id": 0}
+    flights = list(request.app.database["flights"].find(query, projection))
+
+    return flights
+
+
 @router.get("/airports", response_description="Get all airports for food/beverages", response_model=List)
 def list_airports(request: Request):
     pipeline = [
