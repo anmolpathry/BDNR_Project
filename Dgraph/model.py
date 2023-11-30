@@ -38,7 +38,7 @@ def set_schema(client):
         airport_name: string @index(hash) .
         airline_name: string @index(hash) .
         age: int .
-        gender: string @index(hash) .
+        gender: string .
         reason: string .
         stay: string .
         day: int .
