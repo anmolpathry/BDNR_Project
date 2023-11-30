@@ -1,7 +1,7 @@
 // {
 //   "airline": String,
-//   "from": String,
-//   "to": String,
+//   "from_loc": String,
+//   "to_loc": String,
 //   "day": Int,
 //   "month": Int,
 //   "year": Int,
